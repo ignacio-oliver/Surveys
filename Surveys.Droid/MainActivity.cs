@@ -5,7 +5,7 @@ using Xamarin.Forms.Platform.Android;
 
 namespace Surveys.Droid
 {
-    [Activity(Label = "Surveys.Droid", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "Surveys.Droid", MainLauncher = true)]
     public class MainActivity : FormsApplicationActivity
     {
         protected override void OnCreate(Bundle bundle)
