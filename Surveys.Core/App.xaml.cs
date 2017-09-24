@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Surveys.Core.BookCode;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,12 @@ namespace Surveys.Core
         public App()
         {
             InitializeComponent();
-            MainPage = new NavigationPage(new SurveysView());
+
+            /* Inicia proyecto : Libro */
+            //MainPage = new NavigationPage(new SurveysView());
+
+            /* Inicia test's */
+            MainPage = new NavigationPage(new PersonView());
         }
     }
 }

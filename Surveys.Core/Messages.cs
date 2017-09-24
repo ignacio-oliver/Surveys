@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Surveys.Core
 {
-    class Messages
+    public class Messages
     {
         public const string NewSurveyComplete = "NewSurveyComplete";
     }

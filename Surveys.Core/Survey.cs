@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Surveys.Core
 {
-    class Survey
+    public class Survey
     {
         public string Name { get; set; }
         public DateTime Birthdate { get; set; }
