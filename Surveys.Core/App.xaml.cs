@@ -18,10 +18,10 @@ namespace Surveys.Core
             InitializeComponent();
 
             /* Inicia proyecto : Libro */
-            //MainPage = new NavigationPage(new SurveysView());
+            MainPage = new NavigationPage(new SurveysView());
 
-            /* Inicia test's */
-            MainPage = new NavigationPage(new PersonView());
+            /* Inicia test's : Chapter 5*/
+            //MainPage = new NavigationPage(new PersonView());
         }
     }
 }
