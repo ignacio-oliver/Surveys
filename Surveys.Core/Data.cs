@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace Surveys.Core
@@ -12,6 +13,7 @@ namespace Surveys.Core
     {
         private ObservableCollection<Survey> surveys;
         private Survey selectedSurvey;
+        public ICommand NewSurveyCommand { get; set; }
 
         public Data()
         {
@@ -20,6 +22,8 @@ namespace Surveys.Core
                 {
                     Surveys.Add(args);
                 });
+
+            NewSurveyCommand = new Command(NewSurveyCommandExecute);
         }
         public ObservableCollection<Survey> Surveys
         {
@@ -53,6 +57,11 @@ namespace Surveys.Core
                 selectedSurvey = value;
                 OnPropertyChanged();
             }
+        }
+
+        private void NewSurveyCommandExecute()
+        {
+            MessagingCenter.Send(this, Messages.NewSurvey);
         }
     }
 }

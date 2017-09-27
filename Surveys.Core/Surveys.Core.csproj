@@ -39,7 +39,8 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BookCode\BalanceConverter.cs" />
-    <Compile Include="BookCode\Chapter5\Data.cs" />
+    <Compile Include="BookCode\Data.cs" />
+    <Compile Include="BookCode\MyCommand.cs" />
     <Compile Include="BookCode\Notifiable.cs" />
     <Compile Include="BookCode\Person.cs" />
     <Compile Include="BookCode\PersonView.xaml.cs">

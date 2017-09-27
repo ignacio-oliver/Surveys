@@ -4,13 +4,23 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 
-namespace Surveys.Core.BookCode.Chapter5
+namespace Surveys.Core.BookCode
 {
     public class Data : Notifiable
     {
+        private ObservableCollection<Person> persons;
+        private Person selectedPerson;
+
+        public ICommand AddPersonCommand { get; set; }
+
         public Data()
         {
+            //AddPersonCommand = new MyCommand(AddPersonCommandExecute, AddPersonCommandCanExecute);
+            AddPersonCommand = new Command(AddPersonCommandExecute, AddPersonCommandCanExecute);
+
             Persons = new ObservableCollection<Person>();
             var random = new Random();
             for (int i = 0; i < 5; i++)
@@ -25,9 +35,6 @@ namespace Surveys.Core.BookCode.Chapter5
                 );
             }
         }
-
-        private ObservableCollection<Person> persons;
-        private Person selectedPerson;
         
         public ObservableCollection<Person> Persons
         {
@@ -62,6 +69,24 @@ namespace Surveys.Core.BookCode.Chapter5
                 OnPropertyChanged();
             }
 
+        }
+
+        private void AddPersonCommandExecute()
+        {
+            Persons.Add(new Person()
+            {
+                Name = Guid.NewGuid().ToString(),
+                Country = Guid.NewGuid().ToString(),
+                BirthDate = new DateTime(1980, 10, 10),
+                Balance = 0
+            });
+            //(AddPersonCommand as MyCommand)?.RaiseCanExecuteChanged();
+            (AddPersonCommand as Command)?.ChangeCanExecute();
+        }
+
+        private bool AddPersonCommandCanExecute()
+        {
+            return Persons.Count < 10;
         }
     }
 }

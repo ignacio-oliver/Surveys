@@ -1,16 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local1="clr-namespace:Surveys.Core.BookCode;assembly=Surveys.Core"
-             xmlns:local2="clr-namespace:Surveys.Core.BookCode.Chapter5;assembly=Surveys.Core"
+             xmlns:local="clr-namespace:Surveys.Core.BookCode;assembly=Surveys.Core"
              x:Class="Surveys.Core.BookCode.PersonView"
              Title="Enlace de datos">
     
     <ContentPage.Resources>
         <ResourceDictionary>
-            <local1:Person x:Key="person1" Name="Ignacio" Country="Uruguay"/>
-            <local2:Data x:Key="data1" />
-            <local1:BalanceConverter x:Key="BalanceConverter" />
+            <local:Person x:Key="person1" Name="Ignacio" Country="Uruguay"/>
+            <local:Data x:Key="data1" />
+            <local:BalanceConverter x:Key="BalanceConverter" />
             <DataTemplate x:Key="PersonDataTemplate">
                 <ViewCell>
                     <Grid>
@@ -37,25 +36,31 @@
 
         <!-- Binding contextual, Source definido en el elemento padre (en este caso en StackLayout) -->
         <StackLayout Margin="10" BindingContext="{Binding Source={StaticResource person1}}">
+            
+            <!--
             <Label Text="{Binding Name, Mode=OneWay}" />
             <Label Text="{Binding Country, Mode=OneWay}" />
             <Button Text="Modificar" Clicked="Button_OnClicked" />
-
+            -->
 
             <!-- Binding contextual, Source definido en el elemento padre (en este caso en Grid) -->
             <Grid BindingContext="{Binding Source={StaticResource data1}}">
+
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <ListView x:Name="PersonList" ItemsSource="{Binding Persons}" 
-                          SelectedItem="{Binding SelectedPerson, Mode=TwoWay}" 
-                          ItemTemplate="{StaticResource PersonDataTemplate}"
-                          HasUnevenRows="True"/>
-
+                <StackLayout>
+                    <Button Text="Agregar persona" Command="{Binding AddPersonCommand}" />
+                    <ListView x:Name="PersonList" ItemsSource="{Binding Persons}" 
+                                  SelectedItem="{Binding SelectedPerson, Mode=TwoWay}" 
+                                  ItemTemplate="{StaticResource PersonDataTemplate}"
+                                  HasUnevenRows="True"/>
+                </StackLayout>
+                
                 <!-- Binding contextual, Source definido en el elemento padre (en este caso en StackLayout)
-                     En este caso se está enlazando la pripiedad de otro control, la propiedad SelectdItem del ListView -->
+                         En este caso se está enlazando la pripiedad de otro control, la propiedad SelectdItem del ListView -->
                 <StackLayout Grid.Row="1" BindingContext="{Binding SelectedItem, Source={x:Reference PersonList}}" HorizontalOptions="Center">
                     <Label Text="{Binding Name}" />
                     <Label Text="{Binding Country}" />
