@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Surveys.Core.Models;
+using Surveys.Core.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -7,23 +9,24 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace Surveys.Core
+namespace Surveys.Core.ViewModels
 {
-    public class Data : NotificationObject
+    public class SurveysViewModel : NotificationObject
     {
         private ObservableCollection<Survey> surveys;
         private Survey selectedSurvey;
         public ICommand NewSurveyCommand { get; set; }
 
-        public Data()
+        public SurveysViewModel()
         {
             Surveys = new ObservableCollection<Survey>();
-            MessagingCenter.Subscribe<ContentPage, Survey>(this, Messages.NewSurveyComplete, (sender, args) => 
+
+            NewSurveyCommand = new Command(NewSurveyCommandExecute);
+
+            MessagingCenter.Subscribe<SurveyDetailsViewModel, Survey>(this, Messages.NewSurveyComplete, (sender, args) => 
                 {
                     Surveys.Add(args);
                 });
-
-            NewSurveyCommand = new Command(NewSurveyCommandExecute);
         }
         public ObservableCollection<Survey> Surveys
         {

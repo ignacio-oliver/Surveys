@@ -1,14 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:core="clr-namespace:Surveys.Core;assembly=Surveys.Core"
-             x:Class="Surveys.Core.SurveysView"
+             xmlns:viewModels="clr-namespace:Surveys.Core.ViewModels;assembly=Surveys.Core"
+             xmlns:converters="clr-namespace:Surveys.Core.Converters;assembly=Surveys.Core"
+             x:Class="Surveys.Core.Views.SurveysView"
              Title="Encuestas">
     
     <ContentPage.Resources>
         <ResourceDictionary>
-            <core:Data x:Key="data" />
-            <core:TeamColorConverter x:Key="TeamColorConverter" />
+            <viewModels:SurveysViewModel x:Key="SurveysViewModel" />
+            <converters:TeamColorConverter x:Key="TeamColorConverter" />
             <DataTemplate x:Key="SurveyDataTemplate">
                 <ViewCell>
                     <StackLayout>
@@ -21,7 +22,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
         
-    <Grid Margin="10" BindingContext="{Binding Source={StaticResource data}}">
+    <Grid Margin="10" BindingContext="{Binding Source={StaticResource SurveysViewModel}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />

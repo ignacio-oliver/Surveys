@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Surveys.Core
+namespace Surveys.Core.Models
 {
     public class Survey
     {

@@ -46,19 +46,20 @@
     <Compile Include="BookCode\PersonView.xaml.cs">
       <DependentUpon>PersonView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data.cs" />
+    <Compile Include="ViewModels\SurveyDetailsViewModel.cs" />
+    <Compile Include="ViewModels\SurveysViewModel.cs" />
     <Compile Include="Literals.cs" />
     <Compile Include="Messages.cs" />
     <Compile Include="NotificationObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Survey.cs" />
-    <Compile Include="SurveyDetailsView.xaml.cs">
+    <Compile Include="Models\Survey.cs" />
+    <Compile Include="Views\SurveyDetailsView.xaml.cs">
       <DependentUpon>SurveyDetailsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SurveysView.xaml.cs">
+    <Compile Include="Views\SurveysView.xaml.cs">
       <DependentUpon>SurveysView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TeamColorConverter.cs" />
+    <Compile Include="Converters\TeamColorConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -81,13 +82,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SurveysView.xaml">
+    <EmbeddedResource Include="Views\SurveysView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SurveyDetailsView.xaml">
+    <EmbeddedResource Include="Views\SurveyDetailsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

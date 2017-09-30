@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace Surveys.Core
+namespace Surveys.Core.Converters
 {
     public class TeamColorConverter : IValueConverter
     {
