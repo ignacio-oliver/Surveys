@@ -42,5 +42,9 @@
 	<array>
 		<string>location</string>
 	</array>
+  <key>NSLocationWhenInUseUsageDescription</key>
+	<string>Ubicación encuestas</string>
+  <key>NSLocationAlwaysUsageDescription</key>
+  <string>Ubicación encuestas</string>
 </dict>
 </plist>

@@ -89,6 +89,8 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Services\GeolocationService.cs" />
+    <Compile Include="Services\Location\LocationManager.cs" />
+    <Compile Include="Services\Location\LocationUpdatedEventArgs.cs" />
     <None Include="GettingStarted.Xamarin" />
     <None Include="Info.plist">
       <SubType>Designer</SubType>

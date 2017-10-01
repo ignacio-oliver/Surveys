@@ -30,7 +30,7 @@ namespace Surveys.Core.Converters
                 case "Alianza Lima":
                     color = Color.Blue;
                     break;
-                case "Caracas":
+                case "Caracas FC":
                 case "Saprissa":
                     color = Color.Purple;
                     break;
