@@ -53,6 +53,13 @@
 
                 <StackLayout>
                     <Button Text="Agregar persona" Command="{Binding AddPersonCommand}" />
+                    
+                    <Button Text="BeginInvokeOnMainThread" Clicked="ButtonTest_OnClicked" />
+                    <Label x:Name="myLabel" Text="Prueba" />
+                    
+                    <Button x:Name="timerButton" Text="Timer" />
+                    <Label x:Name="Timer" />
+                    
                     <ListView x:Name="PersonList" ItemsSource="{Binding Persons}" 
                                   SelectedItem="{Binding SelectedPerson, Mode=TwoWay}" 
                                   ItemTemplate="{StaticResource PersonDataTemplate}"
