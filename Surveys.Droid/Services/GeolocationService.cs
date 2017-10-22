@@ -8,7 +8,6 @@ using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
-using Android.Widget;
 using Surveys.Core.ServiceInterfaces;
 using Surveys.Droid.Services;
 using Xamarin.Forms;

@@ -1,33 +1,19 @@
-﻿using Surveys.Core.Models;
-using Surveys.Core.ViewModels;
-using System;
-using System.Collections.Generic;
+﻿using Prism.Commands;
+using Prism.Navigation;
+using Surveys.Core.Models;
+using Surveys.Core.Views;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace Surveys.Core.ViewModels
 {
-    public class SurveysViewModel : NotificationObject
+    public class SurveysViewModel : ViewModelBase
     {
+        private INavigationService navigationService = null;
+        
+        #region Properties
         private ObservableCollection<Survey> surveys;
-        private Survey selectedSurvey;
-        public ICommand NewSurveyCommand { get; set; }
-
-        public SurveysViewModel()
-        {
-            Surveys = new ObservableCollection<Survey>();
-
-            NewSurveyCommand = new Command(NewSurveyCommandExecute);
-
-            MessagingCenter.Subscribe<SurveyDetailsViewModel, Survey>(this, Messages.NewSurveyComplete, (sender, args) => 
-                {
-                    Surveys.Add(args);
-                });
-        }
         public ObservableCollection<Survey> Surveys
         {
             get
@@ -36,7 +22,7 @@ namespace Surveys.Core.ViewModels
             }
             set
             {
-                if(surveys == value)
+                if (surveys == value)
                 {
                     return;
                 }
@@ -45,6 +31,7 @@ namespace Surveys.Core.ViewModels
             }
         }
 
+        private Survey selectedSurvey;
         public Survey SelectedSurvey
         {
             get
@@ -53,7 +40,7 @@ namespace Surveys.Core.ViewModels
             }
             set
             {
-                if(selectedSurvey == value)
+                if (selectedSurvey == value)
                 {
                     return;
                 }
@@ -61,10 +48,32 @@ namespace Surveys.Core.ViewModels
                 OnPropertyChanged();
             }
         }
+        #endregion
 
-        private void NewSurveyCommandExecute()
+        public ICommand NewSurveyCommand { get; set; }
+
+        public SurveysViewModel(INavigationService navigationService)
         {
-            MessagingCenter.Send(this, Messages.NewSurvey);
+            this.navigationService = navigationService;
+
+            Surveys = new ObservableCollection<Survey>();
+
+            NewSurveyCommand = new DelegateCommand(NewSurveyCommandExecute);
+        }
+
+        private async void NewSurveyCommandExecute()
+        {
+            await navigationService.NavigateAsync(nameof(SurveyDetailsView));
+        }
+
+        public override void OnNavigatedTo(NavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+
+            if (parameters.ContainsKey("NewSurvey"))
+            {
+                Surveys.Add(parameters["NewSurvey"] as Survey);
+            }
         }
     }
 }

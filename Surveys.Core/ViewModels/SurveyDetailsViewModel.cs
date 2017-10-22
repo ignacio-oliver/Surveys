@@ -1,49 +1,22 @@
 ﻿using Surveys.Core.Models;
 using Surveys.Core.ServiceInterfaces;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Forms;
+using Prism.Navigation;
+using Prism.Services;
+using Prism.Commands;
 
 namespace Surveys.Core.ViewModels
 {
-    public class SurveyDetailsViewModel : NotificationObject
+    public class SurveyDetailsViewModel : ViewModelBase
     {
+        private INavigationService navigationService = null;
+        private IPageDialogService pageDialogService = null;
+
+        #region Properties
         private string name;
-        private DateTime birthdate;
-        private string favoriteTeam;
-        private ObservableCollection<string> teams;
-
-        public ICommand SelectTeamCommand { get; set; }
-        public ICommand EndSurveyCommand { get; set; }
-
-        public SurveyDetailsViewModel()
-        {
-            Teams = new ObservableCollection<string>(new[] 
-            {
-                "Alianza Lima",
-                "América",
-                "Boca Juniors",
-                "Caracas FC",
-                "Colo-Colo",
-                "Nacional",
-                "Real Madrid",
-                "Saprissa"
-            });
-
-            SelectTeamCommand = new Command(SelectTeamCommandExecute);
-            EndSurveyCommand = new Command(EndSurveyCommandExecute, EndSurveyCommandCanExecute);
-
-            PropertyChanged += SurveyDetailsViewModel_PropertyChanged;
-
-            MessagingCenter.Subscribe<ContentPage, string>(this, Messages.TeamSelected, (sender, args) => { FavoriteTeam = args; });
-        }
-
         public string Name
         {
             get
@@ -52,7 +25,7 @@ namespace Surveys.Core.ViewModels
             }
             set
             {
-                if(name == value)
+                if (name == value)
                 {
                     return;
                 }
@@ -61,6 +34,7 @@ namespace Surveys.Core.ViewModels
             }
         }
 
+        private DateTime birthdate;
         public DateTime Birthdate
         {
             get
@@ -69,7 +43,7 @@ namespace Surveys.Core.ViewModels
             }
             set
             {
-                if(birthdate == value)
+                if (birthdate == value)
                 {
                     return;
                 }
@@ -78,6 +52,7 @@ namespace Surveys.Core.ViewModels
             }
         }
 
+        private string favoriteTeam;
         public string FavoriteTeam
         {
             get
@@ -86,7 +61,7 @@ namespace Surveys.Core.ViewModels
             }
             set
             {
-                if(favoriteTeam == value)
+                if (favoriteTeam == value)
                 {
                     return;
                 }
@@ -95,6 +70,7 @@ namespace Surveys.Core.ViewModels
             }
         }
 
+        private ObservableCollection<string> teams;
         public ObservableCollection<string> Teams
         {
             get
@@ -103,7 +79,7 @@ namespace Surveys.Core.ViewModels
             }
             set
             {
-                if(teams == value)
+                if (teams == value)
                 {
                     return;
                 }
@@ -111,10 +87,31 @@ namespace Surveys.Core.ViewModels
                 OnPropertyChanged();
             }
         }
+        #endregion
 
-        private void SelectTeamCommandExecute()
+        public ICommand SelectTeamCommand { get; set; }
+        public ICommand EndSurveyCommand { get; set; }
+
+        public SurveyDetailsViewModel(INavigationService navigationService, IPageDialogService pageDialogService)
         {
-            MessagingCenter.Send(this, Messages.SelectTeam, Teams.ToArray());
+            this.navigationService = navigationService;
+            this.pageDialogService = pageDialogService;
+
+            Teams = new ObservableCollection<string>(new[] 
+            {
+                "Alianza Lima", "América", "Boca Juniors", "Caracas FC", "Colo-Colo", "Nacional", "Real Madrid", "Saprissa"
+            });
+
+            SelectTeamCommand = new DelegateCommand(SelectTeamCommandExecute);
+            EndSurveyCommand = new DelegateCommand(EndSurveyCommandExecute, EndSurveyCommandCanExecute)
+                .ObservesProperty(() => Name)
+                .ObservesProperty(() => FavoriteTeam);
+        }
+
+        private async void SelectTeamCommandExecute()
+        {
+            var team = await pageDialogService.DisplayActionSheetAsync(Literals.FavoriteTeamTitle, null, null, Teams.ToArray());
+            FavoriteTeam = team;
         }
 
         private async void EndSurveyCommandExecute()
@@ -126,7 +123,7 @@ namespace Surveys.Core.ViewModels
                 FavoriteTeam = FavoriteTeam
             };
 
-            var geolocationService = DependencyService.Get<IGeolocationService>();
+            var geolocationService = Xamarin.Forms.DependencyService.Get<IGeolocationService>();
 
             if(geolocationService != null)
             {
@@ -142,21 +139,12 @@ namespace Surveys.Core.ViewModels
                 }
             }
 
-            MessagingCenter.Send(this, Messages.NewSurveyComplete, newSurvey);
-
+            await navigationService.GoBackAsync(new NavigationParameters { { "NewSurvey", newSurvey } });
         }
 
         private bool EndSurveyCommandCanExecute()
         {
             return !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(FavoriteTeam);
-        }
-
-        private void SurveyDetailsViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(Name) || e.PropertyName == nameof(FavoriteTeam))
-            {
-                (EndSurveyCommand as Command)?.ChangeCanExecute();
-            }
         }
     }
 }

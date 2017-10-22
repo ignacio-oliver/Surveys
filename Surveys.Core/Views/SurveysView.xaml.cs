@@ -1,12 +1,4 @@
-﻿using Surveys.Core.ViewModels;
-using Surveys.Core.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Surveys.Core.Views
@@ -17,11 +9,6 @@ namespace Surveys.Core.Views
         public SurveysView()
         {
             InitializeComponent();
-
-            MessagingCenter.Subscribe<SurveysViewModel>(this, Messages.NewSurvey, async (sender) =>
-            {
-                await Navigation.PushAsync(new SurveyDetailsView());
-            });
         }
     }
 }

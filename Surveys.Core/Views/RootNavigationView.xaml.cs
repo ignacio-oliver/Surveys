@@ -4,9 +4,9 @@ using Xamarin.Forms.Xaml;
 namespace Surveys.Core.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SurveyDetailsView : ContentPage
+    public partial class RootNavigationView : NavigationPage
     {
-        public SurveyDetailsView()
+        public RootNavigationView()
         {
             InitializeComponent();
         }
