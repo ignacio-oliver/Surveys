@@ -27,7 +27,7 @@ namespace Surveys.Core.ViewModels
                     return;
                 }
                 surveys = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -45,7 +45,7 @@ namespace Surveys.Core.ViewModels
                     return;
                 }
                 selectedSurvey = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
         #endregion

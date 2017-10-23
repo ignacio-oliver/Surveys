@@ -93,6 +93,10 @@
     <Compile Include="Services\Location\LocationUpdatedEventArgs.cs" />
     <BundleResource Include="Resources\newcapture%402x.png" />
     <BundleResource Include="Resources\ok%402x.png" />
+    <BundleResource Include="Resources\about%402x.png" />
+    <BundleResource Include="Resources\delete%402x.png" />
+    <BundleResource Include="Resources\survey%402x.png" />
+    <BundleResource Include="Resources\sync%402x.png" />
     <None Include="GettingStarted.Xamarin" />
     <None Include="Info.plist">
       <SubType>Designer</SubType>

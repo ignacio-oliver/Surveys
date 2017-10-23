@@ -30,7 +30,7 @@ namespace Surveys.Core.ViewModels
                     return;
                 }
                 name = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -48,7 +48,7 @@ namespace Surveys.Core.ViewModels
                     return;
                 }
                 birthdate = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -66,7 +66,7 @@ namespace Surveys.Core.ViewModels
                     return;
                 }
                 favoriteTeam = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -84,7 +84,7 @@ namespace Surveys.Core.ViewModels
                     return;
                 }
                 teams = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
         #endregion
