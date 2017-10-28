@@ -25,13 +25,13 @@
                         <ViewCell>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Aito" />
+                                    <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="{Binding Icon}"
                                        WidthRequest="50"
                                        HeightRequest="50" />
-                                <Label Text="{Binding Text}"
+                                <Label Text="{Binding Title}"
                                        Grid.Column="1"
                                        TextColor="White"
                                        FontSize="Large"

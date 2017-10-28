@@ -11,23 +11,12 @@ namespace Surveys.Core
         public App()
         {
             InitializeComponent();
-
-            /* Forma en que se inicia la aplicación utilizando Xamarin.Forms (Heredando de Application) */
-
-            /* Inicia proyecto : Libro */
-            //MainPage = new NavigationPage(new SurveysView());
-
-            /* Inicia test's */
-            //MainPage = new NavigationPage(new PersonView());
         }
 
         protected override async void OnInitialized()
         {
-            /* Forma en que se inicia la aplicación utilizando Prism (Heredando de PrismApplication) */
-
-            await NavigationService.NavigateAsync($"{nameof(RootNavigationView)}/{nameof(SurveysView)}");
-
-            //await NavigationService.NavigateAsync($"{nameof(RootNavigationView)}/{nameof(PersonView)}");
+            await NavigationService.NavigateAsync($"{nameof(LoginView)}");
+            //await NavigationService.NavigateAsync($"{nameof(RootNavigationView)}/{nameof(SurveysView)}");
         }
 
         protected override void RegisterTypes()
@@ -35,8 +24,9 @@ namespace Surveys.Core
             Container.RegisterTypeForNavigation<RootNavigationView>();
             Container.RegisterTypeForNavigation<SurveysView>();
             Container.RegisterTypeForNavigation<SurveyDetailsView>();
-
-            //Container.RegisterTypeForNavigation<PersonView>();
+            Container.RegisterTypeForNavigation<AboutView>();
+            Container.RegisterTypeForNavigation<LoginView>();
+            Container.RegisterTypeForNavigation<MainView>();
         }
     }
 }
