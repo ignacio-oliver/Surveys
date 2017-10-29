@@ -1,8 +1,11 @@
 ﻿using Prism.Commands;
 using Prism.Navigation;
+using Prism.Services;
 using Surveys.Core.Models;
+using Surveys.Core.ServiceInterfaces;
 using Surveys.Core.Views;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -11,7 +14,8 @@ namespace Surveys.Core.ViewModels
     public class SurveysViewModel : ViewModelBase
     {
         private INavigationService navigationService = null;
-        
+        private IPageDialogService pageDialogService = null;
+        private ILocalDbService localDbService = null;
         #region Properties
         private ObservableCollection<Survey> surveys;
         public ObservableCollection<Survey> Surveys
@@ -48,17 +52,23 @@ namespace Surveys.Core.ViewModels
                 RaisePropertyChanged();
             }
         }
+
+        public bool IsEmpty => (Surveys == null || Surveys.Count == 0);
         #endregion
 
         public ICommand NewSurveyCommand { get; set; }
+        public ICommand DeleteSurveyCommand { get; set; }
 
-        public SurveysViewModel(INavigationService navigationService)
+        public SurveysViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ILocalDbService localDbService = null)
         {
             this.navigationService = navigationService;
+            this.pageDialogService = pageDialogService;
+            this.localDbService = localDbService;
 
             Surveys = new ObservableCollection<Survey>();
 
             NewSurveyCommand = new DelegateCommand(NewSurveyCommandExecute);
+            DeleteSurveyCommand = new DelegateCommand(DeleteSurveyCommandExecute, DeleteSurveyCommandCanExecute).ObservesProperty(() => SelectedSurvey);
         }
 
         private async void NewSurveyCommandExecute()
@@ -66,14 +76,41 @@ namespace Surveys.Core.ViewModels
             await navigationService.NavigateAsync(nameof(SurveyDetailsView));
         }
 
-        public override void OnNavigatedTo(NavigationParameters parameters)
+        private async void DeleteSurveyCommandExecute()
+        {
+            if(SelectedSurvey == null)
+            {
+                return;
+            }
+            var result = await pageDialogService.DisplayAlertAsync(Literals.DeleteSurveyTitle, Literals.DeleteSurveyConfirmation, Literals.Ok, Literals.Cancel);
+            if(result)
+            {
+                await localDbService.DeleteSurveyAsync(SelectedSurvey);
+                await LoadSurveysAsync();
+            }
+
+        }
+
+        private bool DeleteSurveyCommandCanExecute()
+        {
+            return (SelectedSurvey != null);
+        }
+
+        public override async void OnNavigatedTo(NavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
+            await LoadSurveysAsync();
+        }
 
-            if (parameters.ContainsKey("NewSurvey"))
+        private async Task LoadSurveysAsync()
+        {
+            var allSurveys = await localDbService.GetAllSurveysAsync();
+
+            if (allSurveys != null)
             {
-                Surveys.Add(parameters["NewSurvey"] as Survey);
+                Surveys = new ObservableCollection<Survey>(allSurveys);
             }
+            RaisePropertyChanged(nameof(IsEmpty));
         }
     }
 }

@@ -14,6 +14,7 @@ namespace Surveys.Core.ViewModels
     {
         private INavigationService navigationService = null;
         private IPageDialogService pageDialogService = null;
+        private ILocalDbService localDbService = null;
 
         #region Properties
         private string name;
@@ -92,10 +93,11 @@ namespace Surveys.Core.ViewModels
         public ICommand SelectTeamCommand { get; set; }
         public ICommand EndSurveyCommand { get; set; }
 
-        public SurveyDetailsViewModel(INavigationService navigationService, IPageDialogService pageDialogService)
+        public SurveyDetailsViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ILocalDbService localDbService = null)
         {
             this.navigationService = navigationService;
             this.pageDialogService = pageDialogService;
+            this.localDbService = localDbService;
 
             Teams = new ObservableCollection<string>(new[] 
             {
@@ -118,6 +120,7 @@ namespace Surveys.Core.ViewModels
         {
             var newSurvey = new Survey()
             {
+                Id = Guid.NewGuid().ToString(),
                 Name = Name,
                 Birthdate = Birthdate,
                 FavoriteTeam = FavoriteTeam
@@ -132,14 +135,17 @@ namespace Surveys.Core.ViewModels
                     var currentLocation = await geolocationService.GetCurrentLocationAsync();
                     newSurvey.Latitude = currentLocation.Item1;
                     newSurvey.Longitude = currentLocation.Item2;
-                }catch (Exception)
+                }
+                catch (Exception)
                 {
                     newSurvey.Latitude = 0;
                     newSurvey.Longitude = 0;
                 }
             }
 
-            await navigationService.GoBackAsync(new NavigationParameters { { "NewSurvey", newSurvey } });
+            await localDbService.InsertSurveyAsync(newSurvey);
+
+            await navigationService.GoBackAsync();
         }
 
         private bool EndSurveyCommandCanExecute()

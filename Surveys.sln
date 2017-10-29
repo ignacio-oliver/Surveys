@@ -136,6 +136,7 @@ Global
 		{186A2618-E54D-40FD-A04E-4CE2FE336290}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
 		{186A2618-E54D-40FD-A04E-4CE2FE336290}.Debug|x64.ActiveCfg = Debug|iPhone
 		{186A2618-E54D-40FD-A04E-4CE2FE336290}.Debug|x86.ActiveCfg = Debug|iPhone
+		{186A2618-E54D-40FD-A04E-4CE2FE336290}.Debug|x86.Build.0 = Debug|iPhone
 		{186A2618-E54D-40FD-A04E-4CE2FE336290}.Release|Any CPU.ActiveCfg = Release|iPhone
 		{186A2618-E54D-40FD-A04E-4CE2FE336290}.Release|ARM.ActiveCfg = Release|iPhone
 		{186A2618-E54D-40FD-A04E-4CE2FE336290}.Release|iPhone.ActiveCfg = Release|iPhone

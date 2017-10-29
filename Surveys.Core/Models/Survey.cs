@@ -4,6 +4,7 @@ namespace Surveys.Core.Models
 {
     public class Survey
     {
+        public string Id { get; set; }
         public string Name { get; set; }
         public DateTime Birthdate { get; set; }
         public string FavoriteTeam { get; set; }
@@ -12,7 +13,7 @@ namespace Surveys.Core.Models
 
         public override string ToString()
         {
-            return $"{Name} | {Birthdate} | {FavoriteTeam} | {Latitude} | {Longitude}";
+            return $"{Id} | {Name} | {Birthdate} | {FavoriteTeam} | {Latitude} | {Longitude}";
         }
     }
 }

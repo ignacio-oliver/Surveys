@@ -1,7 +1,9 @@
-﻿using Surveys.Core.BookCode;
-using Surveys.Core.Views;
+﻿using Surveys.Core.Views;
 using Xamarin.Forms.Xaml;
 using Prism.Unity;
+using Surveys.Core.ServiceInterfaces;
+using Surveys.Core.Services;
+using Microsoft.Practices.Unity;
 
 namespace Surveys.Core
 {
@@ -27,6 +29,16 @@ namespace Surveys.Core
             Container.RegisterTypeForNavigation<AboutView>();
             Container.RegisterTypeForNavigation<LoginView>();
             Container.RegisterTypeForNavigation<MainView>();
+        }
+
+        protected override void ConfigureContainer()
+        {
+            base.ConfigureContainer();
+
+            //Container.RegisterInstance(typeof(ILocalDbService), "dbConnection", new LocalDbService(), null);
+
+            Container.RegisterInstance<ILocalDbService>(new LocalDbService());
+
         }
     }
 }
