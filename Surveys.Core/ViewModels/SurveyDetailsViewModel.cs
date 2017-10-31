@@ -1,4 +1,4 @@
-﻿using Surveys.Core.Models;
+﻿using Surveys.Entities;
 using Surveys.Core.ServiceInterfaces;
 using System;
 using System.Collections.ObjectModel;
@@ -123,7 +123,7 @@ namespace Surveys.Core.ViewModels
                 Id = Guid.NewGuid().ToString(),
                 Name = Name,
                 Birthdate = Birthdate,
-                FavoriteTeam = FavoriteTeam
+                //FavoriteTeam = FavoriteTeam
             };
 
             var geolocationService = Xamarin.Forms.DependencyService.Get<IGeolocationService>();

@@ -1,5 +1,5 @@
 ﻿using SQLite;
-using Surveys.Core.Models;
+using Surveys.Entities;
 using Surveys.Core.ServiceInterfaces;
 using System.Collections.Generic;
 using Xamarin.Forms;
@@ -19,7 +19,6 @@ namespace Surveys.Core.Services
 
         private void CreateDatabase()
         {
-            //TODO pagina 266
             IEnumerator<TableMapping> tables = connection.TableMappings.GetEnumerator();
             bool exists = false;
             while(!exists && tables.MoveNext())
@@ -29,13 +28,12 @@ namespace Surveys.Core.Services
                     exists = true;
                 }
             }
-            if(!exists)
+            if (!exists)
                 connection.CreateTable<Survey>();
         }
 
         public Task<IEnumerable<Survey>> GetAllSurveysAsync()
         {
-            //TODO pagina 267
             return Task.Run(() => (IEnumerable<Survey>)connection.Table<Survey>());
         }
 

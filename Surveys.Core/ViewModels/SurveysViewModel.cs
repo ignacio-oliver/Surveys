@@ -1,7 +1,7 @@
 ﻿using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
-using Surveys.Core.Models;
+using Surveys.Entities;
 using Surveys.Core.ServiceInterfaces;
 using Surveys.Core.Views;
 using System.Collections.ObjectModel;
