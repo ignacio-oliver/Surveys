@@ -38,6 +38,7 @@ namespace Surveys.Core
             //Container.RegisterInstance(typeof(ILocalDbService), "dbConnection", new LocalDbService(), null);
 
             Container.RegisterInstance<ILocalDbService>(new LocalDbService());
+            Container.RegisterInstance<IWebApiService>(new WebApiService());
 
         }
     }

@@ -95,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\Learning-LibroXamarinForms - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -110,6 +111,10 @@
     <ProjectReference Include="..\Surveys.Entities\Surveys.Entities.csproj">
       <Project>{4931beb6-00a8-4488-be4b-4f2e42a3e670}</Project>
       <Name>Surveys.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Surveys.Web.DAL.SqlServer\Surveys.Web.DAL.SqlServer.csproj">
+      <Project>{f29b4ad5-3821-4c1f-97b4-3a7096bd6935}</Project>
+      <Name>Surveys.Web.DAL.SqlServer</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
