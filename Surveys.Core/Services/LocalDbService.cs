@@ -20,16 +20,21 @@ namespace Surveys.Core.Services
         private void CreateDatabase()
         {
             IEnumerator<TableMapping> tables = connection.TableMappings.GetEnumerator();
-            bool exists = false;
-            while(!exists && tables.MoveNext())
+            bool existsTableSurvey = false;
+            bool existsTableTeam = false;
+
+            while (tables.MoveNext())
             {
-                if(tables.Current.TableName == nameof(Survey))
-                {
-                    exists = true;
-                }
+                if (tables.Current.TableName == nameof(Survey))
+                    existsTableSurvey = true;
+                if (tables.Current.TableName == nameof(Team))
+                    existsTableTeam = true;
             }
-            if (!exists)
+
+            if (!existsTableSurvey)
                 connection.CreateTable<Survey>();
+            if (!existsTableTeam)
+                connection.CreateTable<Team>();
         }
 
         public Task<IEnumerable<Survey>> GetAllSurveysAsync()
@@ -51,6 +56,26 @@ namespace Surveys.Core.Services
                 var result = command.ExecuteNonQuery();
                 return result > 0;
             });
+        }
+
+        public Task DeleteAllSurveysAsync()
+        {
+            return Task.Run(() => connection.DeleteAll<Survey>() > 0);
+        }
+
+        public Task DeleteAllTeamsAsync()
+        {
+            return Task.Run(() => connection.DeleteAll<Team>() > 0);
+        }
+
+        public Task InsertTeamsAsync(IEnumerable<Team> teams)
+        {
+            return Task.Run(() => connection.InsertAll(teams));
+        }
+
+        public Task<IEnumerable<Team>> GetAllTeamsAsync()
+        {
+            return Task.Run(() => (IEnumerable<Team>)connection.Table<Team>());
         }
     }
 }
