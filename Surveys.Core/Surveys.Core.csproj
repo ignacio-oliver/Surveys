@@ -53,6 +53,7 @@
     <Compile Include="ServiceInterfaces\IWebApiService.cs" />
     <Compile Include="Services\LocalDbService.cs" />
     <Compile Include="Services\WebApiService.cs" />
+    <Compile Include="ViewModels\SyncViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -81,6 +82,9 @@
       <DependentUpon>SurveysView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\TeamColorConverter.cs" />
+    <Compile Include="Views\SyncView.xaml.cs">
+      <DependentUpon>SyncView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="App.xaml">
@@ -179,6 +183,12 @@
       <Project>{4931beb6-00a8-4488-be4b-4f2e42a3e670}</Project>
       <Name>Surveys.Entities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\SyncView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.4.270\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.4.270\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />

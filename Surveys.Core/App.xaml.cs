@@ -29,6 +29,7 @@ namespace Surveys.Core
             Container.RegisterTypeForNavigation<AboutView>();
             Container.RegisterTypeForNavigation<LoginView>();
             Container.RegisterTypeForNavigation<MainView>();
+            Container.RegisterTypeForNavigation<SyncView>();
         }
 
         protected override void ConfigureContainer()
