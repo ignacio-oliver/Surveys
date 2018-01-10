@@ -6,7 +6,6 @@ using Xamarin.Forms;
 using System;
 using System.Collections.Generic;
 using Surveys.Entities;
-using System.Collections.ObjectModel;
 
 namespace Surveys.Core.ViewModels
 {
@@ -63,9 +62,9 @@ namespace Surveys.Core.ViewModels
             SyncCommand = new DelegateCommand(SyncCommandExecute);
         }
 
-        public override void OnNavigatingTo(NavigationParameters parameters)
+        public override void OnNavigatedTo(NavigationParameters parameters)
         {
-            base.OnNavigatingTo(parameters);
+            base.OnNavigatedTo(parameters);
             if (Application.Current.Properties.ContainsKey("lastSync"))
                 Status = $"Última actualización: {(DateTime)Application.Current.Properties["lastSync"]}";
             else
@@ -77,16 +76,18 @@ namespace Surveys.Core.ViewModels
             IsBusy = true;
 
             /* Envía las encuestas */
-            var allSurveys = (ICollection<Survey>) await localDbService.GetAllSurveysAsync();
-            if(allSurveys != null && allSurveys.Count > 0)
+            var allSurveys = await localDbService.GetAllSurveysAsync();
+            List<Survey> listOfSurveys = new List<Survey>(allSurveys);
+            if(allSurveys != null && listOfSurveys.Count > 0)
             {
                 await webApiService.SaveSurveysAsync(allSurveys);
                 await localDbService.DeleteAllTeamsAsync();
             }
 
             /* Consulta los equipos */
-            var allTeams = (ICollection<Team>) await webApiService.GetTeamsAsync();
-            if(allTeams != null && allTeams.Count > 0)
+            var allTeams = await webApiService.GetTeamsAsync();
+            List<Survey> listOfTeams = new List<Survey>(allSurveys);
+            if (allTeams != null && listOfTeams.Count > 0)
             {
                 await localDbService.DeleteAllTeamsAsync();
                 await localDbService.InsertTeamsAsync(allTeams);
@@ -95,7 +96,8 @@ namespace Surveys.Core.ViewModels
             Application.Current.Properties["lastSync"] = DateTime.Now;
             await Application.Current.SavePropertiesAsync();
 
-            Status = $"Se enviaron {allSurveys.Count} encuestas y se obtuvieron {allTeams.Count} equipos";
+            Status = $"Encuestas {allSurveys.GetType().ToString()} | Equipos {allTeams.GetType().ToString()}";
+            //Status = $"Se enviaron {allSurveys.Count} encuestas y se obtuvieron {allTeams.Count} equipos";
             IsBusy = false;
         }
     }

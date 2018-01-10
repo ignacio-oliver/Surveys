@@ -30,7 +30,7 @@ namespace Surveys.Web.DAL.SqlServer
             {
                 return 0;
             }
-            var query = "INSERT INTO Survey (Id, Name, Birthdate, TeamId, Latitude, Longitude) VAULUES (@Id, @Name, @Birthdate, @TeamId, @Latitude, @Longitude)";
+            var query = "INSERT INTO Surveys (Id, Name, Birthdate, TeamId, Latitude, Longitude) VALUES (@Id, @Name, @Birthdate, @TeamId, @Latitude, @Longitude)";
 
             var parameters = new List<SqlParameter>
             {

@@ -18,7 +18,6 @@ namespace Surveys.Core
         protected override async void OnInitialized()
         {
             await NavigationService.NavigateAsync($"{nameof(LoginView)}");
-            //await NavigationService.NavigateAsync($"{nameof(RootNavigationView)}/{nameof(SurveysView)}");
         }
 
         protected override void RegisterTypes()
@@ -36,11 +35,8 @@ namespace Surveys.Core
         {
             base.ConfigureContainer();
 
-            //Container.RegisterInstance(typeof(ILocalDbService), "dbConnection", new LocalDbService(), null);
-
             Container.RegisterInstance<ILocalDbService>(new LocalDbService());
             Container.RegisterInstance<IWebApiService>(new WebApiService());
-
         }
     }
 }
