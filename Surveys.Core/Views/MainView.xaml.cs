@@ -14,6 +14,12 @@ namespace Surveys.Core.Views
     {
         public MainView()
         {
+            /* UWP : Hamburguesa visible */
+            if (Device.RuntimePlatform == Device.Windows)
+            {
+                MasterBehavior = MasterBehavior.Popover;
+            }
+
             InitializeComponent();
         }
     }

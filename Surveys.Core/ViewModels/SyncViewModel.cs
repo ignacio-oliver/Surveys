@@ -81,12 +81,12 @@ namespace Surveys.Core.ViewModels
             if(allSurveys != null && listOfSurveys.Count > 0)
             {
                 await webApiService.SaveSurveysAsync(allSurveys);
-                await localDbService.DeleteAllTeamsAsync();
+                await localDbService.DeleteAllSurveysAsync();
             }
 
             /* Consulta los equipos */
             var allTeams = await webApiService.GetTeamsAsync();
-            List<Survey> listOfTeams = new List<Survey>(allSurveys);
+            List<Team> listOfTeams = new List<Team>(allTeams);
             if (allTeams != null && listOfTeams.Count > 0)
             {
                 await localDbService.DeleteAllTeamsAsync();
@@ -96,8 +96,7 @@ namespace Surveys.Core.ViewModels
             Application.Current.Properties["lastSync"] = DateTime.Now;
             await Application.Current.SavePropertiesAsync();
 
-            Status = $"Encuestas {allSurveys.GetType().ToString()} | Equipos {allTeams.GetType().ToString()}";
-            //Status = $"Se enviaron {allSurveys.Count} encuestas y se obtuvieron {allTeams.Count} equipos";
+            Status = $"Se enviaron {listOfSurveys.Count} encuestas y se obtuvieron {listOfTeams.Count} equipos";
             IsBusy = false;
         }
     }
