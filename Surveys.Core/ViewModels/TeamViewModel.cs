@@ -7,7 +7,7 @@ namespace Surveys.Core.ViewModels
 {
     public class TeamViewModel : BindableBase
     {
-        #region Propiedades
+        #region Properties
         private int id;
         public int Id
         {

@@ -54,6 +54,7 @@
     <Compile Include="Services\LocalDbService.cs" />
     <Compile Include="Services\WebApiService.cs" />
     <Compile Include="ViewModels\SyncViewModel.cs" />
+    <Compile Include="ViewModels\TeamSelectionViewModel.cs" />
     <Compile Include="ViewModels\TeamViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
@@ -85,6 +86,9 @@
     <Compile Include="Converters\TeamColorConverter.cs" />
     <Compile Include="Views\SyncView.xaml.cs">
       <DependentUpon>SyncView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TeamSelectionView.xaml.cs">
+      <DependentUpon>TeamSelectionView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +191,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\SyncView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\TeamSelectionView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

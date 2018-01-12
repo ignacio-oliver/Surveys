@@ -4,8 +4,7 @@ using System.Windows.Input;
 using Prism.Navigation;
 using Xamarin.Forms;
 using System;
-using System.Collections.Generic;
-using Surveys.Entities;
+using System.Linq;
 
 namespace Surveys.Core.ViewModels
 {
@@ -77,8 +76,7 @@ namespace Surveys.Core.ViewModels
 
             /* Envía las encuestas */
             var allSurveys = await localDbService.GetAllSurveysAsync();
-            List<Survey> listOfSurveys = new List<Survey>(allSurveys);
-            if(allSurveys != null && listOfSurveys.Count > 0)
+            if(allSurveys != null && allSurveys.Any())
             {
                 await webApiService.SaveSurveysAsync(allSurveys);
                 await localDbService.DeleteAllSurveysAsync();
@@ -86,8 +84,7 @@ namespace Surveys.Core.ViewModels
 
             /* Consulta los equipos */
             var allTeams = await webApiService.GetTeamsAsync();
-            List<Team> listOfTeams = new List<Team>(allTeams);
-            if (allTeams != null && listOfTeams.Count > 0)
+            if (allTeams != null && allTeams.Any())
             {
                 await localDbService.DeleteAllTeamsAsync();
                 await localDbService.InsertTeamsAsync(allTeams);
@@ -96,7 +93,7 @@ namespace Surveys.Core.ViewModels
             Application.Current.Properties["lastSync"] = DateTime.Now;
             await Application.Current.SavePropertiesAsync();
 
-            Status = $"Se enviaron {listOfSurveys.Count} encuestas y se obtuvieron {listOfTeams.Count} equipos";
+            Status = $"Se enviaron {allSurveys.Count()} encuestas y se obtuvieron {allTeams.Count()} equipos";
             IsBusy = false;
         }
     }

@@ -7,6 +7,8 @@ using System.Windows.Input;
 using Prism.Navigation;
 using Prism.Services;
 using Prism.Commands;
+using Surveys.Core.Views;
+using System.Collections.Generic;
 
 namespace Surveys.Core.ViewModels
 {
@@ -15,6 +17,7 @@ namespace Surveys.Core.ViewModels
         private INavigationService navigationService = null;
         private IPageDialogService pageDialogService = null;
         private ILocalDbService localDbService = null;
+        private IEnumerable<Team> localDbTeams = null;
 
         #region Properties
         private string name;
@@ -70,24 +73,6 @@ namespace Surveys.Core.ViewModels
                 RaisePropertyChanged();
             }
         }
-
-        private ObservableCollection<string> teams;
-        public ObservableCollection<string> Teams
-        {
-            get
-            {
-                return teams;
-            }
-            set
-            {
-                if (teams == value)
-                {
-                    return;
-                }
-                teams = value;
-                RaisePropertyChanged();
-            }
-        }
         #endregion
 
         public ICommand SelectTeamCommand { get; set; }
@@ -99,21 +84,25 @@ namespace Surveys.Core.ViewModels
             this.pageDialogService = pageDialogService;
             this.localDbService = localDbService;
 
-            Teams = new ObservableCollection<string>(new[] 
-            {
-                "Alianza Lima", "América", "Boca Juniors", "Caracas FC", "Colo-Colo", "Nacional", "Real Madrid", "Saprissa"
-            });
-
             SelectTeamCommand = new DelegateCommand(SelectTeamCommandExecute);
             EndSurveyCommand = new DelegateCommand(EndSurveyCommandExecute, EndSurveyCommandCanExecute)
                 .ObservesProperty(() => Name)
                 .ObservesProperty(() => FavoriteTeam);
         }
 
+        public override async void OnNavigatedTo(NavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+            localDbTeams = await localDbService.GetAllTeamsAsync();
+            if (parameters.ContainsKey("id"))
+            {
+                FavoriteTeam = localDbTeams.First(t => t.Id == (int)parameters["id"]).Name;
+            }
+        }
+
         private async void SelectTeamCommandExecute()
         {
-            var team = await pageDialogService.DisplayActionSheetAsync(Literals.FavoriteTeamTitle, null, null, Teams.ToArray());
-            FavoriteTeam = team;
+            await navigationService.NavigateAsync(nameof(TeamSelectionView), useModalNavigation: true);
         }
 
         private async void EndSurveyCommandExecute()
@@ -123,7 +112,7 @@ namespace Surveys.Core.ViewModels
                 Id = Guid.NewGuid().ToString(),
                 Name = Name,
                 Birthdate = Birthdate,
-                //FavoriteTeam = FavoriteTeam
+                TeamId = localDbTeams.First(t => t.Name == FavoriteTeam).Id
             };
 
             var geolocationService = Xamarin.Forms.DependencyService.Get<IGeolocationService>();

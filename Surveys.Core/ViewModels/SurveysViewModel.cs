@@ -7,7 +7,7 @@ using Surveys.Core.Views;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Forms;
+using System.Linq;
 
 namespace Surveys.Core.ViewModels
 {
@@ -53,7 +53,7 @@ namespace Surveys.Core.ViewModels
             }
         }
 
-        public bool IsEmpty => (Surveys == null || Surveys.Count == 0);
+        public bool IsEmpty => (Surveys == null || !Surveys.Any());
         #endregion
 
         public ICommand NewSurveyCommand { get; set; }

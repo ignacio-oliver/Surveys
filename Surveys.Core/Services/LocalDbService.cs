@@ -4,6 +4,7 @@ using Surveys.Core.ServiceInterfaces;
 using System.Collections.Generic;
 using Xamarin.Forms;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Surveys.Core.Services
 {
@@ -19,22 +20,14 @@ namespace Surveys.Core.Services
 
         private void CreateDatabase()
         {
-            IEnumerator<TableMapping> tables = connection.TableMappings.GetEnumerator();
-            bool existsTableSurvey = false;
-            bool existsTableTeam = false;
-
-            while (tables.MoveNext())
+            if(connection.TableMappings.All(t => t.TableName != nameof(Survey)))
             {
-                if (tables.Current.TableName == nameof(Survey))
-                    existsTableSurvey = true;
-                if (tables.Current.TableName == nameof(Team))
-                    existsTableTeam = true;
-            }
-
-            if (!existsTableSurvey)
                 connection.CreateTable<Survey>();
-            if (!existsTableTeam)
+            }
+            if (connection.TableMappings.All(t => t.TableName != nameof(Team)))
+            {
                 connection.CreateTable<Team>();
+            }
         }
 
         public Task<IEnumerable<Survey>> GetAllSurveysAsync()
