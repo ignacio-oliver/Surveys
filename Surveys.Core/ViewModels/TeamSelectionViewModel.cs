@@ -54,9 +54,9 @@ namespace Surveys.Core.ViewModels
             PropertyChanged += TeamSelectionViewModel_PropertyChanged;
         }
 
-        public override async void OnNavigatingTo(NavigationParameters parameters)
+        public override async void OnNavigatedTo(NavigationParameters parameters)
         {
-            base.OnNavigatingTo(parameters);
+            base.OnNavigatedTo(parameters);
             var allTeams = await localDbService.GetAllTeamsAsync();
             if(allTeams != null)
             {

@@ -4,16 +4,21 @@
              xmlns:converters="clr-namespace:Surveys.Core.Converters;assembly=Surveys.Core"
              x:Class="Surveys.Core.Views.SurveysView"
              Title="Encuestas">
-    
     <ContentPage.Resources>
         <ResourceDictionary>
-            <converters:TeamColorConverter x:Key="TeamColorConverter" />
             <DataTemplate x:Key="SurveyDataTemplate">
                 <ViewCell>
-                    <StackLayout>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                    <Image Source="{Binding Team.Logo}" WidthRequest="100" HeightRequest="100" HorizontalOptions="Start" Margin="4" />
+                    <StackLayout Grid.Column="1" Margin="10,0,0,0">
                         <Label Text="{Binding Name}" FontSize="24" />
                         <Label Text="{Binding Birthdate, StringFormat='{}{0:dd/MM/yyyy}'}" />
-                        <Label Text="{Binding FavoriteTeam}" TextColor="{Binding FavoriteTeam, Converter={StaticResource TeamColorConverter}}" />
+                        <Label Text="{Binding Team.Name}" TextColor="{Binding Team.Color}" />
                         <StackLayout Orientation="Horizontal">
                             <Label Text="{Binding Latitude, StringFormat='{}{0:N4}'}" />
                             <Label Text="," />

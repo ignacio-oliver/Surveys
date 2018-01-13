@@ -15,7 +15,6 @@ namespace Surveys.Core.ViewModels
     public class SurveyDetailsViewModel : ViewModelBase
     {
         private INavigationService navigationService = null;
-        private IPageDialogService pageDialogService = null;
         private ILocalDbService localDbService = null;
         private IEnumerable<Team> localDbTeams = null;
 
@@ -56,20 +55,20 @@ namespace Surveys.Core.ViewModels
             }
         }
 
-        private string favoriteTeam;
-        public string FavoriteTeam
+        private string team;
+        public string Team
         {
             get
             {
-                return favoriteTeam;
+                return team;
             }
             set
             {
-                if (favoriteTeam == value)
+                if (team == value)
                 {
                     return;
                 }
-                favoriteTeam = value;
+                team = value;
                 RaisePropertyChanged();
             }
         }
@@ -78,16 +77,18 @@ namespace Surveys.Core.ViewModels
         public ICommand SelectTeamCommand { get; set; }
         public ICommand EndSurveyCommand { get; set; }
 
-        public SurveyDetailsViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ILocalDbService localDbService = null)
+        public SurveyDetailsViewModel(INavigationService navigationService, ILocalDbService localDbService = null)
         {
             this.navigationService = navigationService;
-            this.pageDialogService = pageDialogService;
             this.localDbService = localDbService;
 
+            /* Inicializo la fecha */
+            Birthdate = DateTime.Today;
+     
             SelectTeamCommand = new DelegateCommand(SelectTeamCommandExecute);
             EndSurveyCommand = new DelegateCommand(EndSurveyCommandExecute, EndSurveyCommandCanExecute)
                 .ObservesProperty(() => Name)
-                .ObservesProperty(() => FavoriteTeam);
+                .ObservesProperty(() => Team);
         }
 
         public override async void OnNavigatedTo(NavigationParameters parameters)
@@ -96,7 +97,7 @@ namespace Surveys.Core.ViewModels
             localDbTeams = await localDbService.GetAllTeamsAsync();
             if (parameters.ContainsKey("id"))
             {
-                FavoriteTeam = localDbTeams.First(t => t.Id == (int)parameters["id"]).Name;
+                Team = localDbTeams.First(t => t.Id == (int)parameters["id"]).Name;
             }
         }
 
@@ -112,7 +113,7 @@ namespace Surveys.Core.ViewModels
                 Id = Guid.NewGuid().ToString(),
                 Name = Name,
                 Birthdate = Birthdate,
-                TeamId = localDbTeams.First(t => t.Name == FavoriteTeam).Id
+                TeamId = localDbTeams.First(t => t.Name == Team).Id
             };
 
             var geolocationService = Xamarin.Forms.DependencyService.Get<IGeolocationService>();
@@ -139,7 +140,7 @@ namespace Surveys.Core.ViewModels
 
         private bool EndSurveyCommandCanExecute()
         {
-            return !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(FavoriteTeam);
+            return !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(Team);
         }
     }
 }
