@@ -49,15 +49,16 @@ namespace Surveys.Web.DAL.SqlServer
 
         private Survey GetSurveyFromReader(SqlDataReader reader)
         {
-            return new Survey()
-            {
-                Id = reader[nameof(Survey.Id)].ToString(),
-                Name = reader[nameof(Survey.Name)].ToString(),
-                Birthdate = (DateTime)reader[nameof(Survey.Birthdate)],
-                TeamId = (int)reader[nameof(Survey.TeamId)],
-                Latitude = (double)reader[nameof(Survey.Latitude)],
-                Longitude = (double)reader[nameof(Survey.Longitude)]
-            };
+            var survey = new Survey();
+
+            survey.Id = reader[nameof(Survey.Id)].ToString();
+            survey.Name = reader[nameof(Survey.Name)].ToString();
+            survey.Birthdate = (DateTime)reader[nameof(Survey.Birthdate)];
+            survey.TeamId = (int)reader[nameof(Survey.TeamId)];
+            survey.Latitude = Convert.ToDouble(reader[nameof(Survey.Latitude)]);
+            survey.Longitude = Convert.ToDouble(reader[nameof(Survey.Longitude)]);
+
+            return survey;
         }
     }
 }

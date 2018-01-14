@@ -13,18 +13,18 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                    </Grid>
-                    <Image Source="{Binding Team.Logo}" WidthRequest="100" HeightRequest="100" HorizontalOptions="Start" Margin="4" />
-                    <StackLayout Grid.Column="1" Margin="10,0,0,0">
-                        <Label Text="{Binding Name}" FontSize="24" />
-                        <Label Text="{Binding Birthdate, StringFormat='{}{0:dd/MM/yyyy}'}" />
-                        <Label Text="{Binding Team.Name}" TextColor="{Binding Team.Color}" />
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding Latitude, StringFormat='{}{0:N4}'}" />
-                            <Label Text="," />
-                            <Label Text="{Binding Longitude, StringFormat='{}{0:N4}'}" />
+                        <Image Source="{Binding Team.Logo}" WidthRequest="100" HeightRequest="100" HorizontalOptions="Start" Margin="4" />
+                        <StackLayout Grid.Column="1" Margin="10,0,0,0">
+                            <Label Text="{Binding Name}" FontSize="24" />
+                            <Label Text="{Binding Birthdate, StringFormat='{}{0:dd/MM/yyyy}'}" />
+                            <Label Text="{Binding Team.Name}" TextColor="{Binding Team.Color}" />
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding Latitude, StringFormat='{}{0:N4}'}" />
+                                <Label Text="," />
+                                <Label Text="{Binding Longitude, StringFormat='{}{0:N4}'}" />
+                            </StackLayout>
                         </StackLayout>
-                    </StackLayout>
+                    </Grid>
                 </ViewCell>
             </DataTemplate>
         </ResourceDictionary>
@@ -34,7 +34,9 @@
         <ListView ItemsSource="{Binding Surveys}" 
                   SelectedItem="{Binding SelectedSurvey, Mode=TwoWay}" 
                   ItemTemplate="{StaticResource SurveyDataTemplate}"
+                  SeparatorVisibility="None"
                   HasUnevenRows="True"/>
+        
         <Grid IsVisible="{Binding IsEmpty}">
             <StackLayout VerticalOptions="Center">
                 <Label Text="¡No hay encuestas!" FontSize="Large" HorizontalTextAlignment="Center" />
