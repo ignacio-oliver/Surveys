@@ -15,6 +15,7 @@ namespace Surveys.Web.Controllers
         private readonly SurveysProvider surveysProvider = new SurveysProvider();
 
         // GET: api/Surveys
+        [Authorize]
         public async Task<IEnumerable<Survey>> Get()
         {
             var allSurveys = await surveysProvider.GetAllSurveysAsync();
@@ -22,6 +23,7 @@ namespace Surveys.Web.Controllers
         }
 
         // POST: api/Surveys
+        [Authorize]
         public async Task Post([FromBody]IEnumerable<Survey> surveys)
         {
             if(surveys == null)
