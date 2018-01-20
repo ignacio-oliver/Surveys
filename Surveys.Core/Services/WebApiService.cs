@@ -48,7 +48,7 @@ namespace Surveys.Core.Services
 
             var content = new StringContent($"grant_type=password&username={encodedUserName}&password={encodedPassword}", Encoding.UTF8, "application/x-www-form-urlencoded");
 
-            var uri = new Uri($"{Literals.WebApiServiceBaseAddress}Token");
+            var uri = new Uri($"{Literals.WebApiServiceBaseAddress}token");
             using (var response = client.PostAsync(uri.ToString(), content).Result)
             {
                 var value = await response.Content.ReadAsStringAsync();

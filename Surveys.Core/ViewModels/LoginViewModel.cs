@@ -84,25 +84,24 @@ namespace Surveys.Core.ViewModels
 
         private async void LoginCommandExecute()
         {
-            await navigationService.NavigateAsync($"app:///{nameof(MainView)}/{nameof(RootNavigationView)}/{nameof(SurveysView)}");
-            //IsBusy = true;
-            //try
-            //{
-            //    var loginResult = await webApiService.LoginAsync(Username, Password);
-            //    if (loginResult)
-            //    {
-            //        await navigationService.NavigateAsync($"app:///{nameof(MainView)}/{nameof(RootNavigationView)}/{nameof(SurveysView)}");
-            //    }
-            //    else
-            //    {
-            //        await pageDialogservice.DisplayAlertAsync(Literals.LoginTitle, Literals.AccessDenied, Literals.Ok);
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    await pageDialogservice.DisplayAlertAsync(Literals.LoginTitle, e.Message, Literals.Ok);
-            //}
-            //IsBusy = false;
+            IsBusy = true;
+            try
+            {
+                var loginResult = await webApiService.LoginAsync(Username, Password);
+                if (loginResult)
+                {
+                    await navigationService.NavigateAsync($"app:///{nameof(MainView)}/{nameof(RootNavigationView)}/{nameof(SurveysView)}");
+                }
+                else
+                {
+                    await pageDialogservice.DisplayAlertAsync(Literals.LoginTitle, Literals.AccessDenied, Literals.Ok);
+                }
+            }
+            catch (Exception e)
+            {
+                await pageDialogservice.DisplayAlertAsync(Literals.LoginTitle, e.Message, Literals.Ok);
+            }
+            IsBusy = false;
         }
 
         private bool LoginCommandCanExecute()
