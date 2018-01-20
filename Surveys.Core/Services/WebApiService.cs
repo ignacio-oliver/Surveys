@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Net;
 using Surveys.Core.Models;
+using System.Diagnostics;
 
 namespace Surveys.Core.Services
 {
@@ -23,11 +24,19 @@ namespace Surveys.Core.Services
         public async Task<IEnumerable<Team>> GetTeamsAsync()
         {
             IEnumerable<Team> result = null;
+            try
+            {
+
+            
             var teams = await client.GetStringAsync("api/teams");
 
             if(!string.IsNullOrWhiteSpace(teams))
             {
                 result = JsonConvert.DeserializeObject<IEnumerable<Team>>(teams);
+            }
+            }catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
             }
 
             return result;

@@ -5,6 +5,7 @@ using Prism.Navigation;
 using Xamarin.Forms;
 using System;
 using System.Linq;
+using System.Diagnostics;
 
 namespace Surveys.Core.ViewModels
 {
@@ -74,10 +75,14 @@ namespace Surveys.Core.ViewModels
         {
             IsBusy = true;
 
+            int teamsCount = 0;
+            int surveysCount = 0;
+
             /* Envía las encuestas */
             var allSurveys = await localDbService.GetAllSurveysAsync();
-            if(allSurveys != null && allSurveys.Any())
+            if (allSurveys != null && allSurveys.Any())
             {
+                surveysCount = allSurveys.Count();
                 await webApiService.SaveSurveysAsync(allSurveys);
                 await localDbService.DeleteAllSurveysAsync();
             }
@@ -86,6 +91,7 @@ namespace Surveys.Core.ViewModels
             var allTeams = await webApiService.GetTeamsAsync();
             if (allTeams != null && allTeams.Any())
             {
+                teamsCount = allTeams.Count();
                 await localDbService.DeleteAllTeamsAsync();
                 await localDbService.InsertTeamsAsync(allTeams);
             }
@@ -93,7 +99,15 @@ namespace Surveys.Core.ViewModels
             Application.Current.Properties["lastSync"] = DateTime.Now;
             await Application.Current.SavePropertiesAsync();
 
-            Status = $"Se enviaron {allSurveys.Count()} encuestas y se obtuvieron {allTeams.Count()} equipos";
+            if (allSurveys != null && allTeams != null)
+            {
+                Status = $"Se enviaron {surveysCount} encuestas y se obtuvieron {teamsCount} equipos";
+            }
+            else
+            {
+                Status = $"Error en la sincronización";
+            }
+            
             IsBusy = false;
         }
     }
