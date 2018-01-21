@@ -2,22 +2,26 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Surveys.Core.Views.LoginView">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="StackLayout">
+                <Style.Triggers>
+                    <DataTrigger TargetType="StackLayout" Binding="{Binding IsBusy}" Value="True" >
+                        <Setter Property="IsVisible" Value="False" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <ContentPage.Content>
         <Grid>
             <StackLayout VerticalOptions="Center" Margin="10">
-                <StackLayout.Style>
-                    <Style TargetType="StackLayout">
-                        <Style.Triggers>
-                            <DataTrigger TargetType="StackLayout" Binding="{Binding IsBusy}"  Value="True">
-                                <Setter Property="IsVisible" Value="False" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </StackLayout.Style>
                 <Label Text="Nombre de usuario" />
                 <Entry Text="{Binding Username, Mode=TwoWay}" />
                 <Label Text="Contraseña" />
-                <Entry Text="{Binding Password, Mode=TwoWay}" />
+                <Entry x:Name="password" Text="{Binding Password, Mode=TwoWay}" IsPassword="True"/>
                 <Button Text="Login" Command="{Binding LoginCommand}" />
             </StackLayout>
             <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" VerticalOptions="Center" />

@@ -6,7 +6,7 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <Style x:Key="labelStyle" TargetType="Label">
+            <Style TargetType="Label">
                 <Style.Triggers>
                     <DataTrigger TargetType="Label" Binding="{Binding IsBusy}" Value="True" >
                         <Setter Property="IsVisible" Value="False" />
