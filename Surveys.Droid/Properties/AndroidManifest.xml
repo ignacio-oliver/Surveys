@@ -1,7 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="Surveys.Droid.Surveys.Droid" android:versionCode="1" android:versionName="1.0" android:installLocation="auto">
-	<uses-sdk android:minSdkVersion="19" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="uy.com.soil.surveys.droid" android:versionCode="3" android:versionName="1.2" android:installLocation="auto">
+	<uses-sdk android:minSdkVersion="19" android:targetSdkVersion="26" />
+  <permission android:name="uy.com.soil.surveys.droid.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+  <uses-permission android:name="uy.com.soil.surveys.droid.permission.C2D_MESSAGE" />
+	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-	<application android:allowBackup="true" android:label="@string/app_name"></application>
+	<application android:allowBackup="true" android:icon="@drawable/surveys" android:theme="@style/MainTheme" android:label="Encuestas">
+    <receiver android:name="com.onesignal.GcmBroadcastReceiver"
+          android:permission="com.google.android.c2dm.permission.SEND" >
+      <intent-filter>
+        <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+        <category android:name="uy.com.soil.surveys.droid" />
+      </intent-filter>
+    </receiver>
+  </application>
 </manifest>

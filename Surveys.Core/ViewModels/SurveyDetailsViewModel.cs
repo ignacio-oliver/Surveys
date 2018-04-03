@@ -9,6 +9,7 @@ using Prism.Services;
 using Prism.Commands;
 using Surveys.Core.Views;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Surveys.Core.ViewModels
 {
